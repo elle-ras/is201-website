@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IS 201 | Basketball Game</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-font: "Rubik", sans-serif;
+      --secondary-font: "Inter", sans-serif;
+      --primary-color: #3f3f3f;
+      --secondary-color: #7faeeb;
+      --soft-blue: #e8f1ff;
+      --bg-color: #f7fbff;
+      --card-color: #ffffff;
+      --text-color: #6f6f6f;
+      --nav-shadow: 0 0 24px rgba(0, 0, 0, 0.06);
+      --card-shadow: 0 18px 40px rgba(127, 174, 235, 0.12);
+      --court-wood-1: #f2d7ae;
+      --court-wood-2: #e9c38e;
+      --court-line: rgba(255,255,255,0.95);
+      --rim-main: #e45d2b;
+      --rim-dark: #c6491d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--secondary-font);
+      background: var(--bg-color);
+      color: var(--primary-color);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .navbar {
+      background: var(--card-color);
+      box-shadow: var(--nav-shadow);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .container {
+      width: min(1320px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-family: var(--primary-font);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      color: var(--text-color);
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary-color);
+    }
+
+    .hero {
+      padding: 42px 0 18px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--secondary-color);
+      font-weight: 800;
+      font-family: var(--primary-font);
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-family: var(--primary-font);
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.05;
+    }
+
+    .subtext {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--text-color);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .game-layout {
+      padding: 28px 0 60px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card-color);
+      border: 1px solid var(--soft-blue);
+      border-radius: 24px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .sidebar {
+      padding: 24px;
+      position: sticky;
+      top: 104px;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 18px;
+      font-family: var(--primary-font);
+      font-size: 24px;
+    }
+
+    .stat-box {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      background: var(--bg-color);
+      border: 1px solid var(--soft-blue);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .stat-label {
+      color: var(--text-color);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--primary-font);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--secondary-color);
+    }
+
+    .btn-row {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: var(--secondary-font);
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--soft-blue);
+      color: var(--secondary-color);
+      border: 1px solid var(--soft-blue);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      background: var(--secondary-color);
+      color: #fff;
+    }
+
+    .secondary-btn {
+      background: var(--card-color);
+      color: var(--primary-color);
+      border: 1px solid var(--soft-blue);
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--secondary-color);
+      color: var(--secondary-color);
+    }
+
+    .instructions {
+      margin-top: 12px;
+    }
+
+    .instructions h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-family: var(--primary-font);
+    }
+
+    .instructions ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+
+    .game-card {
+      padding: 20px;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      background: linear-gradient(180deg, #f8fbff 0%, #edf5ff 100%);
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--soft-blue);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 16px;
+      min-height: 28px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      letter-spacing: 0.2px;
+      font-size: 18px;
+    }
+
+    .footer-note {
+      margin-top: 8px;
+      text-align: center;
+      color: var(--text-color);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner {
+        justify-content: center;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .container {
+        width: min(100%, calc(100% - 20px));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="../index.html">IS 201</a>
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="./about.html">Résumé</a>
+        <a href="./scratchpage.html">Basketball</a>
+        <a class="active" href="./game.html">Game</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Basketball Game</div>
+      <h1>Test your shot</h1>
+      <p class="subtext">
+        Hold and release to shoot. Time your power, use the backboard if you want,
+        and keep shooting to build your score and streak.
+      </p>
+    </div>
+  </section>
+
+  <section class="game-layout">
+    <div class="container game-grid">
+      <aside class="card sidebar">
+        <h2>Scoreboard</h2>
+
+        <div class="stat-box">
+          <div class="stat">
+            <div class="stat-label">Score</div>
+            <div class="stat-value" id="score">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">High Score</div>
+            <div class="stat-value" id="highScore">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Shots</div>
+            <div class="stat-value" id="shots">0</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Accuracy</div>
+            <div class="stat-value" id="accuracy">0%</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Streak</div>
+            <div class="stat-value" id="streak">0</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="primary-btn" id="shootBtn">Hold to Shoot</button>
+          <button class="secondary-btn" id="resetBtn">Reset Game</button>
+        </div>
+
+        <div class="instructions">
+          <h3>How to play</h3>
+          <ul>
+            <li>Hold the mouse or space bar to build power.</li>
+            <li>Release to shoot.</li>
+            <li>The hoop moves, so time your shot carefully.</li>
+            <li>Keep shooting to raise your score.</li>
+            <li>Your streak counts baskets made in a row.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="card game-card">
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="1080" height="680"></canvas>
+        </div>
+        <div class="message" id="message">Hold and release to shoot.</div>
+        <div class="footer-note">Tip: bank shots off the backboard can still count.</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const scoreEl = document.getElementById("score");
+    const highScoreEl = document.getElementById("highScore");
+    const shotsEl = document.getElementById("shots");
+    const accuracyEl = document.getElementById("accuracy");
+    const streakEl = document.getElementById("streak");
+    const messageEl = document.getElementById("message");
+    const shootBtn = document.getElementById("shootBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const gravity = 0.24;
+    const floorY = canvas.height - 92;
+    const bounceDamp = 0.72;
+    const rimBounce = 0.82;
+    const backboardBounce = 0.82;
+    const friction = 0.995;
+    const stopVelocity = 1.15;
+    const maxShotTime = 360;
+
+    let score = 0;
+    let highScore = 0;
+    let shots = 0;
+    let streak = 0;
+
+    let charging = false;
+    let power = 0;
+    let powerDirection = 1;
+    const minPower = 0.35;
+    const maxPower = 1.0;
+    const perfectMin = 0.70;
+    const perfectMax = 0.82;
+
+    let scoredThisShot = false;
+    let ballBehindRim = false;
+    let shotFrames = 0;
+
+    const ball = {
+      x: 170,
+      y: floorY,
+      radius: 16,
+      vx: 0,
+      vy: 0,
+      inAir: false,
+      rotation: 0
+    };
+
+    const hoop = {
+      x: 760,
+      y: 215,
+      width: 104,
+      frontRimX: 0,
+      backRimX: 0,
+      rimY: 0,
+      backboardX: 0,
+      backboardY: 0,
+      backboardW: 18,
+      backboardH: 138,
+      direction: 1,
+      speed: 1.4,
+      moveMin: 650,
+      moveMax: 980
+    };
+
+    function updateHoopGeometry() {
+      hoop.frontRimX = hoop.x;
+      hoop.backRimX = hoop.x + hoop.width;
+      hoop.rimY = hoop.y;
+      hoop.backboardX = hoop.backRimX + 10;
+      hoop.backboardY = hoop.y - 66;
+    }
+
+    updateHoopGeometry();
+
+    function updateStats() {
+      scoreEl.textContent = score;
+      highScoreEl.textContent = highScore;
+      shotsEl.textContent = shots;
+      streakEl.textContent = streak;
+      const accuracy = shots === 0 ? 0 : Math.round((score / shots) * 100);
+      accuracyEl.textContent = accuracy + "%";
+    }
+
+    function setMessage(text) {
+      messageEl.textContent = text;
+    }
+
+    function readyNextShot() {
+      ball.x = 170;
+      ball.y = floorY;
+      ball.vx = 0;
+      ball.vy = 0;
+      ball.inAir = false;
+      ball.rotation = 0;
+      charging = false;
+      power = 0;
+      powerDirection = 1;
+      scoredThisShot = false;
+      ballBehindRim = false;
+      shotFrames = 0;
+    }
+
+    function resetGame() {
+      score = 0;
+      shots = 0;
+      streak = 0;
+      updateStats();
+      readyNextShot();
+      setMessage("Game reset. Hold and release to shoot.");
+    }
+
+    function startCharge() {
+      if (ball.inAir || charging) return;
+      charging = true;
+      power = minPower;
+      powerDirection = 1;
+      setMessage("Charging...");
+    }
+
+    function releaseShot() {
+      if (!charging || ball.inAir) return;
+
+      charging = false;
+      shots += 1;
+      scoredThisShot = false;
+      ballBehindRim = false;
+      shotFrames = 0;
+
+      const targetX = hoop.x + hoop.width / 2;
+      const dx = targetX - ball.x;
+      const perfectRelease = power >= perfectMin && power <= perfectMax;
+
+      const horizontalScale = perfectRelease ? 74 : 67;
+      const liftBoost = perfectRelease ? 1.06 : 1;
+
+      ball.vx = (dx / horizontalScale) * (0.94 + power * 0.20);
+      ball.vy = -(8.8 + power * 5.8) * liftBoost;
+      ball.inAir = true;
+
+      updateStats();
+
+      if (perfectRelease) {
+        setMessage("Perfect release.");
+      } else if (power < 0.48) {
+        setMessage("A little light.");
+      } else if (power > 0.90) {
+        setMessage("A little strong.");
+      } else {
+        setMessage("Shot up...");
+      }
+    }
+
+    function drawRoundedRect(x, y, w, h, r, fillStyle) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+      ctx.fillStyle = fillStyle;
+      ctx.fill();
+    }
+
+    function drawCourt() {
+      const sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      sky.addColorStop(0, "#f8fbff");
+      sky.addColorStop(1, "#edf5ff");
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "rgba(127, 174, 235, 0.12)";
+      ctx.beginPath();
+      ctx.arc(170, 100, 72, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(930, 80, 52, 0, Math.PI * 2);
+      ctx.fill();
+
+      const wood = ctx.createLinearGradient(0, floorY + 20, 0, canvas.height);
+      wood.addColorStop(0, "#f2d7ae");
+      wood.addColorStop(1, "#e9c38e");
+
+      ctx.fillStyle = wood;
+      ctx.fillRect(0, floorY + 20, canvas.width, canvas.height - (floorY + 20));
+
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      for (let i = 0; i < 18; i++) {
+        ctx.fillRect(i * 64, floorY + 20, 2, canvas.height - floorY);
+      }
+
+      ctx.strokeStyle = "rgba(255,255,255,0.95)";
+      ctx.lineWidth = 3;
+
+      ctx.beginPath();
+      ctx.moveTo(0, floorY + 20);
+      ctx.lineTo(canvas.width, floorY + 20);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(160, floorY + 20, 82, Math.PI * 1.5, Math.PI * 0.5, true);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(160, floorY + 20, 12, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(hoop.x + hoop.width / 2, hoop.y + 150, 96, Math.PI, 0);
+      ctx.stroke();
+    }
+
+    function drawBackboard() {
+      drawRoundedRect(hoop.backboardX - 64, hoop.backboardY - 34, 92, 116, 10, "rgba(236,245,255,0.82)");
+      ctx.strokeStyle = "rgba(186, 211, 243, 0.95)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(hoop.backboardX - 64, hoop.backboardY - 34, 92, 116);
+
+      drawRoundedRect(hoop.backboardX, hoop.backboardY, hoop.backboardW, hoop.backboardH, 7, "#dae9fb");
+
+      ctx.strokeStyle = "#b8d2f7";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(hoop.backboardX - 38, hoop.backboardY + 18, 40, 28);
+    }
+
+    function drawSupport() {
+      ctx.strokeStyle = "#bdd6f8";
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(hoop.backboardX - 16, hoop.y - 10);
+      ctx.lineTo(hoop.backRimX - 8, hoop.y - 1);
+      ctx.stroke();
+    }
+
+    function drawNet(backLayer = false) {
+      const topY = hoop.rimY + 2;
+      const bottomY = hoop.rimY + 44;
+      const left = hoop.frontRimX + 12;
+      const right = hoop.backRimX - 12;
+
+      ctx.strokeStyle = backLayer ? "rgba(232,240,250,0.55)" : "rgba(247,251,255,0.95)";
+      ctx.lineWidth = backLayer ? 1.6 : 2;
+
+      for (let i = 0; i <= 7; i++) {
+        const xTop = left + ((right - left) / 7) * i;
+        const xBottom = left + 8 + ((right - left - 16) / 7) * i;
+        ctx.beginPath();
+        ctx.moveTo(xTop, topY);
+        ctx.lineTo(xBottom, bottomY);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i <= 6; i++) {
+        const xTop = left + 6 + ((right - left - 12) / 6) * i;
+        const xBottom = left + ((right - left) / 6) * i;
+        ctx.beginPath();
+        ctx.moveTo(xTop, topY);
+        ctx.lineTo(xBottom, bottomY);
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(left + 8, bottomY);
+      ctx.lineTo(right - 8, bottomY);
+      ctx.stroke();
+    }
+
+    function drawRim(frontLayer = true) {
+      if (frontLayer) {
+        ctx.strokeStyle = "#e45d2b";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(hoop.frontRimX, hoop.rimY);
+        ctx.lineTo(hoop.backRimX, hoop.rimY);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#c6491d";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(hoop.frontRimX + 2, hoop.rimY + 2);
+        ctx.lineTo(hoop.backRimX - 2, hoop.rimY + 2);
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = "rgba(210, 92, 47, 0.40)";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(hoop.frontRimX + 4, hoop.rimY - 2);
+        ctx.lineTo(hoop.backRimX - 4, hoop.rimY - 2);
+        ctx.stroke();
+      }
+    }
+
+    function drawHoopBack() {
+      drawSupport();
+      drawBackboard();
+      drawRim(false);
+      drawNet(true);
+    }
+
+    function drawHoopFront() {
+      drawNet(false);
+      drawRim(true);
+    }
+
+    function drawBallShadow() {
+      if (!ball.inAir) {
+        ctx.beginPath();
+        ctx.ellipse(ball.x, floorY + 24, 20, 7, 0, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(0,0,0,0.10)";
+        ctx.fill();
+      }
+    }
+
+    function drawBall() {
+      ctx.save();
+      ctx.translate(ball.x, ball.y);
+      ctx.rotate(ball.rotation);
+
+      const ballGrad = ctx.createRadialGradient(-4, -6, 3, 0, 0, ball.radius);
+      ballGrad.addColorStop(0, "#ef9b4f");
+      ballGrad.addColorStop(0.55, "#da7a2b");
+      ballGrad.addColorStop(1, "#b85f1c");
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = ballGrad;
+      ctx.fill();
+
+      ctx.strokeStyle = "#8c4a18";
+      ctx.lineWidth = 2.2;
+
+      ctx.beginPath();
+      ctx.moveTo(-ball.radius, 0);
+      ctx.lineTo(ball.radius, 0);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, -ball.radius);
+      ctx.lineTo(0, ball.radius);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius - 4, Math.PI * 0.18, Math.PI * 0.82);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius - 4, Math.PI * 1.18, Math.PI * 1.82);
+      ctx.stroke();
+
+      ctx.strokeStyle = "rgba(255,255,255,0.35)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(-4, -5, ball.radius * 0.38, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawPowerMeter() {
+      const meterX = 28;
+      const meterY = 26;
+      const meterW = 240;
+      const meterH = 20;
+
+      drawRoundedRect(meterX, meterY, meterW, meterH, 10, "#ffffff");
+      ctx.strokeStyle = "#d8e7ff";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(meterX, meterY, meterW, meterH);
+
+      const perfectX = meterX + meterW * perfectMin;
+      const perfectW = meterW * (perfectMax - perfectMin);
+      drawRoundedRect(perfectX, meterY, perfectW, meterH, 10, "#dff0ff");
+
+      const fillW = meterW * power;
+      drawRoundedRect(meterX, meterY, fillW, meterH, 10, "#7faeeb");
+
+      ctx.fillStyle = "#6f6f6f";
+      ctx.font = "600 15px Inter";
+      ctx.fillText("Power", meterX, meterY - 8);
+    }
+
+    function drawAimHint() {
+      if (ball.inAir) return;
+
+      ctx.strokeStyle = "rgba(127, 174, 235, 0.28)";
+      ctx.lineWidth = 3;
+      ctx.setLineDash([8, 8]);
+
+      const targetX = hoop.x + hoop.width / 2;
+      const previewVy = -(8.8 + power * 5.8);
+      const peakY = ball.y + previewVy * 14;
+
+      ctx.beginPath();
+      ctx.moveTo(ball.x, ball.y);
+      ctx.quadraticCurveTo((ball.x + targetX) / 2, peakY, targetX, hoop.y + 18);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+    }
+
+    function updateCharge() {
+      if (!charging || ball.inAir) return;
+
+      power += 0.012 * powerDirection;
+
+      if (power >= maxPower) {
+        power = maxPower;
+        powerDirection = -1;
+      } else if (power <= minPower) {
+        power = minPower;
+        powerDirection = 1;
+      }
+    }
+
+    function updateHoop() {
+      hoop.x += hoop.direction * hoop.speed;
+      updateHoopGeometry();
+
+      if (hoop.x <= hoop.moveMin || hoop.backRimX >= hoop.moveMax) {
+        hoop.direction *= -1;
+      }
+    }
+
+    function circleCollision(px, py, pr, cx, cy, cr) {
+      const dx = px - cx;
+      const dy = py - cy;
+      return Math.hypot(dx, dy) < pr + cr;
+    }
+
+    function handleBackboardCollision() {
+      const left = hoop.backboardX;
+      const right = hoop.backboardX + hoop.backboardW;
+      const top = hoop.backboardY;
+      const bottom = hoop.backboardY + hoop.backboardH;
+
+      if (
+        ball.x + ball.radius > left &&
+        ball.x - ball.radius < right &&
+        ball.y + ball.radius > top &&
+        ball.y - ball.radius < bottom &&
+        ball.vx > 0
+      ) {
+        ball.x = left - ball.radius;
+        ball.vx = -Math.abs(ball.vx) * backboardBounce;
+        ball.vy *= 0.98;
+        setMessage("Off the glass...");
+      }
+    }
+
+    function handleRimCollision() {
+      const rimRadius = 7;
+
+      if (circleCollision(ball.x, ball.y, ball.radius, hoop.frontRimX, hoop.rimY, rimRadius)) {
+        const dx = ball.x - hoop.frontRimX;
+        const dy = ball.y - hoop.rimY;
+        const dist = Math.max(Math.hypot(dx, dy), 0.001);
+        const nx = dx / dist;
+        const ny = dy / dist;
+
+        ball.x = hoop.frontRimX + nx * (ball.radius + rimRadius);
+        ball.y = hoop.rimY + ny * (ball.radius + rimRadius);
+
+        const dot = ball.vx * nx + ball.vy * ny;
+        ball.vx = (ball.vx - 2 * dot * nx) * rimBounce;
+        ball.vy = (ball.vy - 2 * dot * ny) * rimBounce;
+      }
+
+      if (circleCollision(ball.x, ball.y, ball.radius, hoop.backRimX, hoop.rimY, rimRadius)) {
+        const dx = ball.x - hoop.backRimX;
+        const dy = ball.y - hoop.rimY;
+        const dist = Math.max(Math.hypot(dx, dy), 0.001);
+        const nx = dx / dist;
+        const ny = dy / dist;
+
+        ball.x = hoop.backRimX + nx * (ball.radius + rimRadius);
+        ball.y = hoop.rimY + ny * (ball.radius + rimRadius);
+
+        const dot = ball.vx * nx + ball.vy * ny;
+        ball.vx = (ball.vx - 2 * dot * nx) * rimBounce;
+        ball.vy = (ball.vy - 2 * dot * ny) * rimBounce;
+      }
+    }
+
+    function checkScore() {
+      const scoreTop = hoop.rimY;
+      const scoreBottom = hoop.rimY + 38;
+
+      if (
+        !scoredThisShot &&
+        ball.vy > 0 &&
+        ball.x > hoop.frontRimX + 8 &&
+        ball.x < hoop.backRimX - 8 &&
+        ball.y > scoreTop &&
+        ball.y < scoreBottom
+      ) {
+        score += 1;
+        if (score > highScore) highScore = score;
+        streak += 1;
+        scoredThisShot = true;
+        updateStats();
+
+        if (streak >= 3) {
+          setMessage("Bucket. You're on fire.");
+        } else {
+          setMessage("Bucket.");
+        }
+      }
+    }
+
+    function updateBallLayer() {
+      ballBehindRim =
+        ball.inAir &&
+        ball.vy > 0 &&
+        ball.x > hoop.frontRimX &&
+        ball.x < hoop.backRimX &&
+        ball.y > hoop.rimY - 6 &&
+        ball.y < hoop.rimY + 48;
+    }
+
+    function finishShot(made) {
+      if (!made) {
+        streak = 0;
+        updateStats();
+        setMessage("Missed it. Keep shooting.");
+      }
+      readyNextShot();
+    }
+
+    function updateBall() {
+      if (!ball.inAir) return;
+
+      shotFrames++;
+
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      ball.vy += gravity;
+      ball.vx *= friction;
+      ball.rotation += 0.085;
+
+      handleBackboardCollision();
+      handleRimCollision();
+      checkScore();
+      updateBallLayer();
+
+      if (ball.y + ball.radius >= floorY + 20) {
+        ball.y = floorY + 20 - ball.radius;
+
+        if (Math.abs(ball.vy) > stopVelocity && shotFrames < maxShotTime) {
+          ball.vy = -Math.abs(ball.vy) * bounceDamp;
+          ball.vx *= 0.94;
+        } else {
+          finishShot(scoredThisShot);
+        }
+      }
+
+      if (ball.x > canvas.width + 80 || ball.y < -120 || ball.x < -80 || shotFrames > maxShotTime) {
+        finishShot(scoredThisShot);
+      }
+    }
+
+    function drawScene() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawCourt();
+      drawPowerMeter();
+      drawAimHint();
+      drawBallShadow();
+      drawHoopBack();
+
+      if (ballBehindRim) {
+        drawBall();
+        drawHoopFront();
+      } else {
+        drawHoopFront();
+        drawBall();
+      }
+    }
+
+    function animate() {
+      updateHoop();
+      updateCharge();
+      updateBall();
+      drawScene();
+      requestAnimationFrame(animate);
+    }
+
+    shootBtn.addEventListener("mousedown", startCharge);
+    shootBtn.addEventListener("mouseup", releaseShot);
+    shootBtn.addEventListener("mouseleave", () => {
+      if (charging) releaseShot();
+    });
+
+    canvas.addEventListener("mousedown", startCharge);
+    canvas.addEventListener("mouseup", releaseShot);
+    canvas.addEventListener("mouseleave", () => {
+      if (charging) releaseShot();
+    });
+
+    resetBtn.addEventListener("click", resetGame);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !e.repeat) {
+        e.preventDefault();
+        startCharge();
+      }
+    });
+
+    window.addEventListener("keyup", (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        releaseShot();
+      }
+    });
+
+    updateStats();
+    readyNextShot();
+    drawScene();
+    animate();
+  </script>
+</body>
+</html>

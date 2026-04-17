@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duke Basketball</title>
+    <link rel="stylesheet" href="../assets/css/scratch.css">
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <div class="nav">
+        <a href="../index.html">Home</a>
+        <a href="./about.html">Résumé</a>
+        <a href="./game.html">Game</a>
+        <a href="#tableau">Basketball</a>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header" id="top">
+        <h1>Duke Basketball</h1>
+        <p>My family has always loved Duke basketball, especially since both of my parent went there for the MBA programs. Because of that, I grew up watching Duke game, following players, and getting really into the sport. Over time, it made me love basketball even more, especially since I played myself and could relate to what I was watching. 
+        </p>
+    </div>
+
+    <!-- IMAGE + TEXT -->
+    <div class="section two-column">
+        <div>
+            <h2>Coach K & Why Duke is Special</h2>
+            <p>
+                One of the biggest reasons Duke basketball is so well known is because of Coach K.
+                He coached at Duke from 1980 to 2022 and is considered one of the best coaches ever,
+                winning five national championships.
+
+            <p>
+                What I think is cool is how consistent Duke has been over time. Even after Coach K,
+                the program still stays competitive and relevant every year.
+            </p>
+        </div>
+
+        <div>
+            <img src="../assets/images/duke.jpeg" alt="Duke Basketball" class="main-img">
+        </div>
+    </div>
+
+    <!-- LIST SECTION -->
+    <div class="section">
+        <h2>What I Like About Duke Basketball</h2>
+
+        <ol>
+            <li>Famous players
+                <ul>
+                    <li>Zion Williamson</li>
+                    <li>Kyrie Irving</li>
+                    <li>Jayson Tatum</li>
+                    <li>Paolo Banchero</li>
+                    <li>Cooper Flagg</li>
+                </ul>
+            </li>
+
+            <li>Style of play
+                <ul>
+                    <li>Strong defense</li>
+                    <li>Team basketball</li>
+                    <li>High energy</li>
+                </ul>
+            </li>
+
+            <li>Why I personally like it
+                <ul>
+                    <li>I grew up watching it</li>
+                    <li>My family loves it and has ties</li>
+                    <li>I played basketball myself</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section">
+        <h2>Duke Highlights</h2>
+        <p>This is one of my favorite highlight videos:</p>
+
+        <div class="video">
+            <iframe 
+                src="https://www.youtube.com/embed/D20l2EXPDs0"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <!-- TEXT -->
+    <div class="section">
+        <h2>My Thoughts</h2>
+        <p>
+            I think Duke basketball is fun to watch because it always feels intense.
+            The games are competitive and there is always something happening.
+        </p>
+
+        <p>
+            I also like how players come through Duke and go to the NBA.
+            It feels like you are watching future pros before they get there.
+        </p>
+    </div>
+
+    <!-- TABLEAU -->
+    <div class="section" id="tableau">
+        <h2>NBA Stats Visualization</h2>
+
+        <div class='tableauPlaceholder' id='viz1'>
+            <object class='tableauViz'>
+                <param name='host_url' value='https://public.tableau.com/' />
+                <param name='name' value='NCAAAnimatedBarGraph/Sheet5' />
+                <param name='toolbar' value='yes' />
+            </object>
+        </div>
+
+        <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
+    </div>
+    <script type='text/javascript'>
+    var divElement = document.getElementById('viz1');
+    var vizElement = divElement.getElementsByTagName('object')[0];
+
+    vizElement.style.width = '100%';
+    vizElement.style.height = '800px';  /* MAKE IT BIGGER */
+
+    var scriptElement = document.createElement('script');
+    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+</script>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <a href="#top">Back to top</a>
+    </div>
+
+</body>
+</html>
